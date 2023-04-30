@@ -1,0 +1,22 @@
+import PyPDF2
+from gtts import gTTS
+import os
+
+pdfobj = open('sample.pdf','rb')
+
+pdfreader = PyPDF2.PdfReader(pdfobj)
+
+text = ""
+
+for pagenumber in range(len(pdfreader.pages)):
+	page = pdfreader.pages[pagenumber]
+	text += page.extract_text()
+
+pdfobj.close()
+
+print(text)
+
+tts = gTTS(text=text, lang='en')
+tts.save("story.mp3")
+
+os.system("story.mp3")
